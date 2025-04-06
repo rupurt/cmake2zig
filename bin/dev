@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+source $SCRIPTS/common.sh
+
+# @cmd Ensures configuration has been initialized
+setup() {
+	mkdir -p $LOCAL
+}
+
+# @cmd Ensures code is formatted and that tests pass
+# @flag --format        Run formatters
+# @flag --lint          Run ruff linter
+# @flag --typecheck     Run typechecks
+# @flag --test          Run tests
+check() { :; }
+
+# @cmd Example CMake build systems that can be converted to the Zig build system
+examples() { :; }
+
+# @cmd Example CMake build systems
+examples::cmake() { :; }
+
+# @cmd Generate CMake build
+examples::cmake::generate() {
+  runp "cd examples/add && cmake -B build"
+}
+
+# @cmd Build a CMake-generated project binary tree
+examples::cmake::build() {
+  runp "cd examples/add && cmake --build build"
+}
+
+# Parse args and apply them to the specified function
+dev --ensure-devshell "$@"
